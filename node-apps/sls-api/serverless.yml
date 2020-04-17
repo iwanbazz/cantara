@@ -1,0 +1,29 @@
+service: random-image
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: eu-central-1
+  environment:
+    STAGE: '${opt:stage}'
+functions:
+  handler:
+    handler: handler.handler
+    events:
+      - http:
+          path: /
+          method: get
+          cors: true
+custom:
+  serverless-offline:
+    port: 3002
+  webpack:
+    webpackConfig: >-
+      ../../../../../../../../../home/iwan/.npm-global/lib/node_modules/cantara/static/.temp/sls-api_serverlessWebpackConfig.js
+    includeModules:
+      packagePath: ./package.json
+    packager: npm
+plugins:
+  - >-
+    /home/iwan/.npm-global/lib/node_modules/cantara/node_modules/serverless-offline
+  - >-
+    /home/iwan/.npm-global/lib/node_modules/cantara/node_modules/serverless-webpack
